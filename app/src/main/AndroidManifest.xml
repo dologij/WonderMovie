@@ -9,6 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".MovieListActivity"
+            android:label="@string/title_movie_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".MovieDetailActivity"
+            android:label="@string/title_movie_detail"
+            android:parentActivityName=".MovieListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.brunix.wondermovie.MovieListActivity" />
+        </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
