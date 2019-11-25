@@ -1,11 +1,11 @@
 package com.brunix.wondermovie
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.brunix.wondermovie.dummy.DummyContent
+import androidx.fragment.app.Fragment
+import com.brunix.wondermovie.model.Movie
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 import kotlinx.android.synthetic.main.movie_detail.view.*
 
@@ -18,43 +18,40 @@ import kotlinx.android.synthetic.main.movie_detail.view.*
 class MovieDetailFragment : Fragment() {
 
     /**
-     * The dummy content this fragment is presenting.
+     * The movie this fragment is presenting.
      */
-    private var item: DummyContent.DummyItem? = null
+    private var movie: Movie? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         arguments?.let {
-            if (it.containsKey(ARG_ITEM_ID)) {
-                // Load the dummy content specified by the fragment
-                // arguments. In a real-world scenario, use a Loader
-                // to load content from a content provider.
-                item = DummyContent.ITEM_MAP[it.getString(ARG_ITEM_ID)]
-                activity?.toolbar_layout?.title = item?.content
+            if (it.containsKey(ARG_MOVIE)) {
+                // Load the movie specified by the fragment
+                movie = it.getParcelable(ARG_MOVIE)
+                activity?.toolbar_layout?.title = movie?.title
+                activity?.movie_detail_image?.loadUrl("https://image.tmdb.org/t/p/w780${movie?.backdropPath}")
             }
         }
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val rootView = inflater.inflate(R.layout.movie_detail, container, false)
 
         // Show the dummy content as text in a TextView.
-        item?.let {
-            rootView.movie_detail.text = it.details
+        movie?.let {
+            rootView.movie_detail_summary.text = it.overview
+            rootView.movie_detail_info.setMovie(it)
         }
 
         return rootView
     }
 
     companion object {
-        /**
-         * The fragment argument representing the item ID that this fragment
-         * represents.
-         */
-        const val ARG_ITEM_ID = "item_id"
+        const val ARG_MOVIE = "MovieDetailFragment:movie"
     }
 }

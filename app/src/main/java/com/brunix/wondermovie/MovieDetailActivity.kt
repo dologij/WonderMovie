@@ -2,10 +2,10 @@ package com.brunix.wondermovie
 
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NavUtils
-import android.view.MenuItem
+import com.brunix.wondermovie.model.Movie
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 
 /**
@@ -16,15 +16,14 @@ import kotlinx.android.synthetic.main.activity_movie_detail.*
  */
 class MovieDetailActivity : AppCompatActivity() {
 
+    companion object {
+        const val ARG_MOVIE = "MovieDetailActivity:movie"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
-        setSupportActionBar(detail_toolbar)
-
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+        setSupportActionBar(movie_detail_toolbar)
 
         // Show the Up button in the action bar.
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -43,9 +42,9 @@ class MovieDetailActivity : AppCompatActivity() {
             // using a fragment transaction.
             val fragment = MovieDetailFragment().apply {
                 arguments = Bundle().apply {
-                    putString(
-                        MovieDetailFragment.ARG_ITEM_ID,
-                        intent.getStringExtra(MovieDetailFragment.ARG_ITEM_ID)
+                    putParcelable(
+                        MovieDetailFragment.ARG_MOVIE,
+                        intent.getParcelableExtra<Movie>(ARG_MOVIE)
                     )
                 }
             }
