@@ -8,7 +8,7 @@
     android:padding="2dp"
     android:foreground="?attr/selectableItemBackground">
 
-    <com.brunix.wondermovie.AspectRatioImageView
+    <com.brunix.wondermovie.ui.common.AspectRatioImageView
         android:id="@+id/movie_cover"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

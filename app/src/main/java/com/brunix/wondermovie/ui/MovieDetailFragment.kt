@@ -1,11 +1,13 @@
-package com.brunix.wondermovie
+package com.brunix.wondermovie.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.brunix.wondermovie.R
 import com.brunix.wondermovie.model.Movie
+import com.brunix.wondermovie.ui.common.loadUrl
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 import kotlinx.android.synthetic.main.movie_detail.view.*
 

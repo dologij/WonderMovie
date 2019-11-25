@@ -13,19 +13,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MovieListActivity"
+            android:name=".ui.MovieListActivity"
             android:label="@string/title_movie_list"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".MovieDetailActivity"
+            android:name=".ui.MovieDetailActivity"
             android:label="@string/title_movie_detail"
-            android:parentActivityName=".MovieListActivity"
+            android:parentActivityName=".ui.MovieListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.brunix.wondermovie.MovieListActivity" />
+                android:value="com.brunix.wondermovie.ui.MovieListActivity" />
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

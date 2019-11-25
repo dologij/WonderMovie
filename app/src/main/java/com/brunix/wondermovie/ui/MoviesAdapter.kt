@@ -1,9 +1,13 @@
-package com.brunix.wondermovie
+package com.brunix.wondermovie.ui
 
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.brunix.wondermovie.R
 import com.brunix.wondermovie.model.Movie
+import com.brunix.wondermovie.ui.common.basicDiffUtil
+import com.brunix.wondermovie.ui.common.inflate
+import com.brunix.wondermovie.ui.common.loadUrl
 import kotlinx.android.synthetic.main.movie_list_content.view.*
 
 class MoviesAdapter(private val listener: (Movie) -> Unit) : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {

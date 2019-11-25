@@ -1,8 +1,11 @@
-package com.brunix.wondermovie
+package com.brunix.wondermovie.ui
 
 import android.os.Bundle
 import androidx.recyclerview.widget.RecyclerView
+import com.brunix.wondermovie.R
 import com.brunix.wondermovie.model.MoviesRepository
+import com.brunix.wondermovie.ui.common.CoroutineScopeActivity
+import com.brunix.wondermovie.ui.common.startActivity
 import kotlinx.android.synthetic.main.activity_movie_list.*
 import kotlinx.android.synthetic.main.movie_list.*
 import kotlinx.coroutines.launch

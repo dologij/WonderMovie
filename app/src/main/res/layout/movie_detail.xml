@@ -14,7 +14,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         tools:text="Lorem ipsum" />
 
-    <com.brunix.wondermovie.MovieDetailInfoView
+    <com.brunix.wondermovie.ui.MovieDetailInfoView
         android:id="@+id/movie_detail_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
