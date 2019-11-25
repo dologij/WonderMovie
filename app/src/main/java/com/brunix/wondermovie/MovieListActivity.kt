@@ -2,6 +2,7 @@ package com.brunix.wondermovie
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -11,9 +12,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 import com.brunix.wondermovie.dummy.DummyContent
+import com.brunix.wondermovie.model.MoviesRepository
 import kotlinx.android.synthetic.main.activity_movie_list.*
 import kotlinx.android.synthetic.main.movie_list_content.view.*
 import kotlinx.android.synthetic.main.movie_list.*
+import kotlinx.coroutines.launch
 
 /**
  * An activity representing a list of Pings. This activity
@@ -23,7 +26,9 @@ import kotlinx.android.synthetic.main.movie_list.*
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-class MovieListActivity : AppCompatActivity() {
+class MovieListActivity : CoroutineScopeActivity() {
+
+    private val moviesRepository: MoviesRepository by lazy { MoviesRepository(this) }
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -55,6 +60,11 @@ class MovieListActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
+        launch {
+            val movies = moviesRepository.findPopularMovies()
+            Log.d("", String.format("movies: %s", movies.totalResults.toString()))
+        }
+
         recyclerView.adapter = SimpleItemRecyclerViewAdapter(this, DummyContent.ITEMS, twoPane)
     }
 
