@@ -9,7 +9,7 @@ import com.brunix.wondermovie.R
 import com.brunix.wondermovie.model.Movie
 import com.brunix.wondermovie.ui.common.loadUrl
 import kotlinx.android.synthetic.main.activity_movie_detail.*
-import kotlinx.android.synthetic.main.movie_detail.view.*
+import kotlinx.android.synthetic.main.movie_detail.*
 
 /**
  * A fragment representing a single Movie detail screen.
@@ -17,12 +17,14 @@ import kotlinx.android.synthetic.main.movie_detail.view.*
  * in two-pane mode (on tablets) or a [MovieDetailActivity]
  * on handsets.
  */
-class MovieDetailFragment : Fragment() {
+class MovieDetailFragment : Fragment(), MovieDetailPresenter.View {
 
     /**
      * The movie this fragment is presenting.
      */
     private var movie: Movie? = null
+
+    private val presenter = MovieDetailPresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +33,6 @@ class MovieDetailFragment : Fragment() {
             if (it.containsKey(ARG_MOVIE)) {
                 // Load the movie specified by the fragment
                 movie = it.getParcelable(ARG_MOVIE)
-                activity?.toolbar_layout?.title = movie?.title
-                activity?.movie_detail_image?.loadUrl("https://image.tmdb.org/t/p/w780${movie?.backdropPath}")
             }
         }
     }
@@ -42,15 +42,27 @@ class MovieDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.movie_detail, container, false)
+        return inflater.inflate(R.layout.movie_detail, container, false)
+    }
 
-        // Show the dummy content as text in a TextView.
-        movie?.let {
-            rootView.movie_detail_summary.text = it.overview
-            rootView.movie_detail_info.setMovie(it)
-        }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        presenter.onCreateView(this, movie)
+    }
 
-        return rootView
+    override fun updateHeader(movie: Movie?) {
+        activity?.toolbar_layout?.title = movie?.title
+        activity?.movie_detail_image?.loadUrl("https://image.tmdb.org/t/p/w780${movie?.backdropPath}")
+    }
+
+    override fun updateDetails(movie: Movie?) {
+        movie_detail_summary.text = movie?.overview
+        movie?.let { movie_detail_info.setMovie(it) }
+    }
+
+    override fun onDestroyView() {
+        presenter.onDestroyView()
+        super.onDestroyView()
     }
 
     companion object {
