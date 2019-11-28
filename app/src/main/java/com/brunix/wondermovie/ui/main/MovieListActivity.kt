@@ -1,12 +1,13 @@
 package com.brunix.wondermovie.ui.main
 
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.brunix.wondermovie.R
 import com.brunix.wondermovie.model.MoviesRepository
-import com.brunix.wondermovie.ui.detail.MovieDetailActivity
 import com.brunix.wondermovie.ui.common.CoroutineScopeActivity
 import com.brunix.wondermovie.ui.common.startActivity
+import com.brunix.wondermovie.ui.detail.MovieDetailActivity
 import kotlinx.android.synthetic.main.activity_movie_list.*
 import kotlinx.android.synthetic.main.movie_list.*
 import kotlinx.coroutines.launch
@@ -60,7 +61,9 @@ class MovieListActivity : CoroutineScopeActivity() {
         recyclerView.adapter = adapter
 
         launch {
+            progress.visibility = View.VISIBLE
             adapter.movies = moviesRepository.findPopularMovies().results
+            progress.visibility = View.GONE
         }
     }
 }
