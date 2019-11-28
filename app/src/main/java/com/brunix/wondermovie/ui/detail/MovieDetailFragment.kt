@@ -1,4 +1,4 @@
-package com.brunix.wondermovie.ui
+package com.brunix.wondermovie.ui.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater

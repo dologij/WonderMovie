@@ -1,9 +1,10 @@
-package com.brunix.wondermovie.ui
+package com.brunix.wondermovie.ui.main
 
 import android.os.Bundle
 import androidx.recyclerview.widget.RecyclerView
 import com.brunix.wondermovie.R
 import com.brunix.wondermovie.model.MoviesRepository
+import com.brunix.wondermovie.ui.detail.MovieDetailActivity
 import com.brunix.wondermovie.ui.common.CoroutineScopeActivity
 import com.brunix.wondermovie.ui.common.startActivity
 import kotlinx.android.synthetic.main.activity_movie_list.*
@@ -30,7 +31,10 @@ class MovieListActivity : CoroutineScopeActivity() {
 
     private val adapter = MoviesAdapter {
         startActivity<MovieDetailActivity> {
-            putExtra(MovieDetailActivity.ARG_MOVIE, it)
+            putExtra(
+                MovieDetailActivity.ARG_MOVIE,
+                it
+            )
         }
     }
 

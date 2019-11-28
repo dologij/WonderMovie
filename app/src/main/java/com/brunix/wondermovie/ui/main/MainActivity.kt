@@ -1,4 +1,4 @@
-package com.brunix.wondermovie.ui
+package com.brunix.wondermovie.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

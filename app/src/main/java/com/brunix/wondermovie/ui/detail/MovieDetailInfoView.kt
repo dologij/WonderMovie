@@ -1,4 +1,4 @@
-package com.brunix.wondermovie.ui
+package com.brunix.wondermovie.ui.detail
 
 import android.content.Context
 import android.util.AttributeSet

@@ -1,4 +1,4 @@
-package com.brunix.wondermovie.ui
+package com.brunix.wondermovie.ui.detail
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NavUtils
 import com.brunix.wondermovie.R
 import com.brunix.wondermovie.model.Movie
+import com.brunix.wondermovie.ui.main.MovieListActivity
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 
 /**
@@ -41,7 +42,8 @@ class MovieDetailActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
-            val fragment = MovieDetailFragment().apply {
+            val fragment = MovieDetailFragment()
+                .apply {
                 arguments = Bundle().apply {
                     putParcelable(
                         MovieDetailFragment.ARG_MOVIE,
