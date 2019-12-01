@@ -10,7 +10,9 @@ import com.brunix.wondermovie.R
 import com.brunix.wondermovie.model.MoviesRepository
 import com.brunix.wondermovie.ui.common.startActivity
 import com.brunix.wondermovie.ui.detail.MovieDetailActivity
-import com.brunix.wondermovie.ui.main.MovieListViewModel.UiModel.*
+import com.brunix.wondermovie.ui.main.MovieListViewModel.UiModel.Content
+import com.brunix.wondermovie.ui.main.MovieListViewModel.UiModel.Loading
+import com.brunix.wondermovie.ui.main.MovieListViewModel.UiModel.Navigation
 import kotlinx.android.synthetic.main.activity_movie_list.*
 import kotlinx.android.synthetic.main.movie_list.*
 
