@@ -42,15 +42,7 @@ class MovieDetailActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
-            val fragment = MovieDetailFragment()
-                .apply {
-                arguments = Bundle().apply {
-                    putParcelable(
-                        MovieDetailFragment.ARG_MOVIE,
-                        intent.getParcelableExtra<Movie>(ARG_MOVIE)
-                    )
-                }
-            }
+            val fragment = MovieDetailFragment.newInstance(intent.getParcelableExtra<Movie>(ARG_MOVIE))
 
             supportFragmentManager.beginTransaction()
                 .add(R.id.movie_detail_container, fragment)

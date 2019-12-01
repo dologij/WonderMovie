@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.brunix.wondermovie.R
 import com.brunix.wondermovie.model.Movie
@@ -66,6 +67,15 @@ class MovieDetailFragment : Fragment(), MovieDetailPresenter.View {
     }
 
     companion object {
-        const val ARG_MOVIE = "MovieDetailFragment:movie"
+        private const val ARG_MOVIE = "MovieDetailFragment:movie"
+
+        /**
+         * Create a new instance of MovieDetailFragment, initialized to
+         * show the movie in 'movie'.
+         */
+        fun newInstance(movie: Movie?) = MovieDetailFragment().apply {
+            // Supply movie input as an argument.
+            arguments = bundleOf(ARG_MOVIE to movie)
+        }
     }
 }
