@@ -1,10 +1,10 @@
 package com.brunix.wondermovie.ui.common
 
-import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
+import kotlin.coroutines.CoroutineContext
 
 interface Scope : CoroutineScope {
 
@@ -16,7 +16,7 @@ interface Scope : CoroutineScope {
         job = SupervisorJob()
     }
 
-    fun cancelScope() {
+    fun destroyScope() {
         job.cancel() // Cancel job on activity destroy. After destroy all children jobs will be cancelled automatically
     }
 
