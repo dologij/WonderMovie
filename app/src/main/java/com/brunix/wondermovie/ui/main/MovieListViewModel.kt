@@ -13,12 +13,14 @@ class MovieListViewModel(private val moviesRepository: MoviesRepository) : ViewM
     Scope by Scope.Impl() {
 
     sealed class UiModel {
-        // UI state: the list of movies to show in the screen is loading
+        // UI state: The list of movies to show in the screen is loading
         object Loading : UiModel()
         // UI state: Show the list of movies in the screen
         class Content(val movies: List<Movie>) : UiModel()
         // UI state: Go to the detail of a movie
         class Navigation(val movie: Movie) : UiModel()
+        // UI state: Ask for the permissions needed to get the location
+        object RequestLocationPermission : UiModel()
     }
 
     private val _model = MutableLiveData<UiModel>()
@@ -35,6 +37,10 @@ class MovieListViewModel(private val moviesRepository: MoviesRepository) : ViewM
     }
 
     private fun refresh() {
+        _model.value = UiModel.RequestLocationPermission
+    }
+
+    fun onCoarsePermissionRequested() {
         launch {
             _model.value = UiModel.Loading
             _model.value = UiModel.Content(moviesRepository.findPopularMovies().results)

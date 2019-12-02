@@ -1,18 +1,18 @@
 package com.brunix.wondermovie.ui.main
 
+import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
+import com.brunix.wondermovie.PermissionRequester
 import com.brunix.wondermovie.R
 import com.brunix.wondermovie.model.MoviesRepository
 import com.brunix.wondermovie.ui.common.startActivity
 import com.brunix.wondermovie.ui.detail.MovieDetailActivity
-import com.brunix.wondermovie.ui.main.MovieListViewModel.UiModel.Content
-import com.brunix.wondermovie.ui.main.MovieListViewModel.UiModel.Loading
-import com.brunix.wondermovie.ui.main.MovieListViewModel.UiModel.Navigation
+import com.brunix.wondermovie.ui.main.MovieListViewModel.UiModel.*
 import kotlinx.android.synthetic.main.activity_movie_list.*
 import kotlinx.android.synthetic.main.movie_list.*
 
@@ -35,6 +35,7 @@ class MovieListActivity : AppCompatActivity() {
     private var twoPane: Boolean = false
 
     private lateinit var adapter: MoviesAdapter
+    private val coarsePermissionRequester = PermissionRequester(this, ACCESS_COARSE_LOCATION)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +58,7 @@ class MovieListActivity : AppCompatActivity() {
     private fun setupRecyclerView(recyclerView: RecyclerView) {
         viewModel = ViewModelProviders.of(
             this,
-            MovieListViewModelFactory(MoviesRepository(this))
+            MovieListViewModelFactory(MoviesRepository(application))
         )[MovieListViewModel::class.java]
 
         adapter = MoviesAdapter(viewModel::onMovieClicked)
@@ -74,6 +75,9 @@ class MovieListActivity : AppCompatActivity() {
             is Content -> adapter.movies = model.movies
             is Navigation -> startActivity<MovieDetailActivity> {
                 putExtra(MovieDetailActivity.ARG_MOVIE, model.movie)
+            }
+            RequestLocationPermission -> coarsePermissionRequester.request {
+                viewModel.onCoarsePermissionRequested()
             }
         }
     }
