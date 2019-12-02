@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.brunix.wondermovie.R
 import com.brunix.wondermovie.model.Movie
+import com.brunix.wondermovie.ui.common.getViewModel
 import com.brunix.wondermovie.ui.common.loadUrl
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 import kotlinx.android.synthetic.main.movie_detail.*
@@ -52,10 +52,7 @@ class MovieDetailFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProviders.of(
-            this,
-            MovieDetailViewModelFactory(movie)
-        )[MovieDetailViewModel::class.java]
+        viewModel = getViewModel { MovieDetailViewModel(movie) }
 
         viewModel.model.observe(this, Observer(::updateUi))
     }

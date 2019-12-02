@@ -3,7 +3,6 @@ package com.brunix.wondermovie.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.brunix.wondermovie.model.Movie
 import com.brunix.wondermovie.model.MoviesRepository
 import com.brunix.wondermovie.ui.common.Scope
@@ -56,10 +55,4 @@ class MovieListViewModel(private val moviesRepository: MoviesRepository) : ViewM
     fun onMovieClicked(movie: Movie) {
         _model.value = UiModel.Navigation(movie)
     }
-}
-
-@Suppress("UNCHECKED_CAST")
-class MovieListViewModelFactory(private val moviesRepository: MoviesRepository) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-        MovieListViewModel(moviesRepository) as T
 }

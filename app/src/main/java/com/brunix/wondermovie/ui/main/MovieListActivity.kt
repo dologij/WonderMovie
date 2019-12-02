@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import com.brunix.wondermovie.PermissionRequester
 import com.brunix.wondermovie.R
 import com.brunix.wondermovie.model.MoviesRepository
+import com.brunix.wondermovie.ui.common.getViewModel
 import com.brunix.wondermovie.ui.common.startActivity
 import com.brunix.wondermovie.ui.detail.MovieDetailActivity
 import com.brunix.wondermovie.ui.main.MovieListViewModel.UiModel.*
@@ -56,10 +56,7 @@ class MovieListActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
-        viewModel = ViewModelProviders.of(
-            this,
-            MovieListViewModelFactory(MoviesRepository(application))
-        )[MovieListViewModel::class.java]
+        viewModel = getViewModel {MovieListViewModel(MoviesRepository(application))}
 
         adapter = MoviesAdapter(viewModel::onMovieClicked)
         recyclerView.adapter = adapter
