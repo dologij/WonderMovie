@@ -1,4 +1,4 @@
-package com.brunix.wondermovie.model
+package com.brunix.wondermovie.model.server
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

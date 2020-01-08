@@ -6,7 +6,6 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NavUtils
 import com.brunix.wondermovie.R
-import com.brunix.wondermovie.model.Movie
 import com.brunix.wondermovie.ui.main.MovieListActivity
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 
@@ -42,7 +41,7 @@ class MovieDetailActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
-            val fragment = MovieDetailFragment.newInstance(intent.getParcelableExtra<Movie>(ARG_MOVIE))
+            val fragment = MovieDetailFragment.newInstance(intent.getIntExtra(ARG_MOVIE, -1))
 
             supportFragmentManager.beginTransaction()
                 .add(R.id.movie_detail_container, fragment)

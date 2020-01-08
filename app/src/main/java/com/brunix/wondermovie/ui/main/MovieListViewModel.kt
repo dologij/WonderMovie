@@ -2,14 +2,12 @@ package com.brunix.wondermovie.ui.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.brunix.wondermovie.model.Movie
-import com.brunix.wondermovie.model.MoviesRepository
-import com.brunix.wondermovie.ui.common.Scope
+import com.brunix.wondermovie.model.database.Movie
+import com.brunix.wondermovie.model.server.MoviesRepository
+import com.brunix.wondermovie.ui.common.ScopedViewModel
 import kotlinx.coroutines.launch
 
-class MovieListViewModel(private val moviesRepository: MoviesRepository) : ViewModel(),
-    Scope by Scope.Impl() {
+class MovieListViewModel(private val moviesRepository: MoviesRepository) : ScopedViewModel() {
 
     sealed class UiModel {
         // UI state: The list of movies to show in the screen is loading
@@ -42,7 +40,7 @@ class MovieListViewModel(private val moviesRepository: MoviesRepository) : ViewM
     fun onCoarsePermissionRequested() {
         launch {
             _model.value = UiModel.Loading
-            _model.value = UiModel.Content(moviesRepository.findPopularMovies().results)
+            _model.value = UiModel.Content(moviesRepository.findPopularMovies())
             // No need for a hideProgress: the view will be responsible for that (the view assumes that
             // whenever there is no info loading, the progress will not be shown)
         }

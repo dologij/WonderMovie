@@ -8,7 +8,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.brunix.wondermovie.PermissionRequester
 import com.brunix.wondermovie.R
-import com.brunix.wondermovie.model.MoviesRepository
+import com.brunix.wondermovie.model.server.MoviesRepository
+import com.brunix.wondermovie.ui.common.app
 import com.brunix.wondermovie.ui.common.getViewModel
 import com.brunix.wondermovie.ui.common.startActivity
 import com.brunix.wondermovie.ui.detail.MovieDetailActivity
@@ -56,7 +57,9 @@ class MovieListActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
-        viewModel = getViewModel {MovieListViewModel(MoviesRepository(application))}
+        viewModel = getViewModel {MovieListViewModel(
+            MoviesRepository(app)
+        )}
 
         adapter = MoviesAdapter(viewModel::onMovieClicked)
         recyclerView.adapter = adapter
@@ -71,7 +74,7 @@ class MovieListActivity : AppCompatActivity() {
         when (model) {
             is Content -> adapter.movies = model.movies
             is Navigation -> startActivity<MovieDetailActivity> {
-                putExtra(MovieDetailActivity.ARG_MOVIE, model.movie)
+                putExtra(MovieDetailActivity.ARG_MOVIE, model.movie.id)
             }
             RequestLocationPermission -> coarsePermissionRequester.request {
                 viewModel.onCoarsePermissionRequested()

@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.brunix.wondermovie.MyApplication
 import com.bumptech.glide.Glide
 import kotlin.properties.Delegates
 
@@ -70,3 +71,6 @@ inline fun <reified T : ViewModel> Fragment.getViewModel(crossinline factory: ()
 
     return ViewModelProviders.of(this, vmFactory)[T::class.java]
 }
+
+val Context.app: MyApplication
+    get() = applicationContext as MyApplication

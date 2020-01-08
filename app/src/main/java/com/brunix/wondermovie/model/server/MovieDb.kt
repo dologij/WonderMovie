@@ -1,4 +1,4 @@
-package com.brunix.wondermovie.model
+package com.brunix.wondermovie.model.server
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
@@ -20,6 +20,7 @@ object MovieDb {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .run {
-            create<MovieDbService>(MovieDbService::class.java)
+            create<MovieDbService>(
+                MovieDbService::class.java)
         }
 }

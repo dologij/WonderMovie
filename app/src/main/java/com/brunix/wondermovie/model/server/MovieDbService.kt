@@ -1,4 +1,4 @@
-package com.brunix.wondermovie.model
+package com.brunix.wondermovie.model.server
 
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET

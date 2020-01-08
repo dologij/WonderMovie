@@ -4,7 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.brunix.wondermovie.R
-import com.brunix.wondermovie.model.Movie
+import com.brunix.wondermovie.model.database.Movie
 import com.brunix.wondermovie.ui.common.basicDiffUtil
 import com.brunix.wondermovie.ui.common.inflate
 import com.brunix.wondermovie.ui.common.loadUrl
@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.movie_list_content.view.*
 
 class MoviesAdapter(private val listener: (Movie) -> Unit) : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
 
-    var movies: List<Movie> by basicDiffUtil(emptyList(), areItemsTheSame = {old, new -> old.id == new.id})
+    var movies: List<Movie> by basicDiffUtil(emptyList(), areItemsTheSame = { old, new -> old.id == new.id})
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = parent.inflate(R.layout.movie_list_content, false)
