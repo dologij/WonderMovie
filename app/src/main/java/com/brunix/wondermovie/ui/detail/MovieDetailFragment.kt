@@ -7,8 +7,16 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.brunix.data.repository.MoviesRepository
+import com.brunix.data.repository.RegionRepository
+import com.brunix.interactor.FindMovieById
+import com.brunix.interactor.ToggleMovieFavorite
+import com.brunix.wondermovie.MyApplication
 import com.brunix.wondermovie.R
-import com.brunix.wondermovie.model.server.MoviesRepository
+import com.brunix.wondermovie.model.AndroidPermissionChecker
+import com.brunix.wondermovie.model.PlayServicesLocationDataSource
+import com.brunix.wondermovie.model.database.RoomDataSource
+import com.brunix.wondermovie.model.server.MovieDbDataSource
 import com.brunix.wondermovie.ui.common.app
 import com.brunix.wondermovie.ui.common.getViewModel
 import com.brunix.wondermovie.ui.common.loadUrl
@@ -30,6 +38,8 @@ class MovieDetailFragment : Fragment(){
     private var movieId: Int = 0
 
     private lateinit var viewModel: MovieDetailViewModel
+
+    private lateinit var myApp: MyApplication
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +63,24 @@ class MovieDetailFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = getViewModel { MovieDetailViewModel(movieId, MoviesRepository(activity!!.app)) }
+//        activity?.app?.db?.let{RoomDataSource(it)}
+        myApp = activity!!.app
+
+        viewModel = getViewModel {
+            val moviesRepository = MoviesRepository(
+                RoomDataSource(myApp.db),
+                MovieDbDataSource(),
+                RegionRepository(
+                    PlayServicesLocationDataSource(myApp),
+                    AndroidPermissionChecker(myApp)
+                ),
+                myApp.getString(R.string.api_key)
+            )
+            MovieDetailViewModel(
+                movieId,
+                FindMovieById(moviesRepository),
+                ToggleMovieFavorite(moviesRepository)
+            ) }
 
         viewModel.model.observe(this, Observer(::updateUi))
 

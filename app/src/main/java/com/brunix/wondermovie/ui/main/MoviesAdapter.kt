@@ -3,8 +3,8 @@ package com.brunix.wondermovie.ui.main
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.brunix.domain.Movie
 import com.brunix.wondermovie.R
-import com.brunix.wondermovie.model.database.Movie
 import com.brunix.wondermovie.ui.common.basicDiffUtil
 import com.brunix.wondermovie.ui.common.inflate
 import com.brunix.wondermovie.ui.common.loadUrl

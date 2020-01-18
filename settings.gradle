@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':data', ':interactor', ':domain'
 rootProject.name='Wonder Movie'

@@ -2,12 +2,17 @@ package com.brunix.wondermovie.ui.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.brunix.wondermovie.model.database.Movie
-import com.brunix.wondermovie.model.server.MoviesRepository
+import com.brunix.domain.Movie
+import com.brunix.interactor.FindMovieById
+import com.brunix.interactor.ToggleMovieFavorite
 import com.brunix.wondermovie.ui.common.ScopedViewModel
 import kotlinx.coroutines.launch
 
-class MovieDetailViewModel(private val movieId: Int, private val moviesRepository: MoviesRepository) :
+class MovieDetailViewModel(
+    private val movieId: Int,
+    private val findMovieById: FindMovieById,
+    private val toggleMovieFavorite: ToggleMovieFavorite
+) :
     ScopedViewModel() {
 
     class UiModel (val movie: Movie)
@@ -20,14 +25,13 @@ class MovieDetailViewModel(private val movieId: Int, private val moviesRepositor
         }
 
     private fun findMovie() = launch {
-        _model.value = UiModel(moviesRepository.findById(movieId))
+        _model.value = UiModel(findMovieById.invoke(movieId))
     }
 
     fun onFavoriteClicked() = launch {
         _model.value?.movie?.let {
             val updatedMovie = it.copy(favorite = !it.favorite)
-            _model.value = UiModel(updatedMovie)
-            moviesRepository.update(updatedMovie)
+            _model.value = UiModel(toggleMovieFavorite.invoke(it))
         }
     }
 }

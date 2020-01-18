@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.TextView
 import androidx.core.text.bold
-import com.brunix.wondermovie.model.database.Movie
+import com.brunix.domain.Movie
 
 class MovieDetailInfoView @JvmOverloads constructor(
     context: Context,

@@ -6,9 +6,15 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import com.brunix.wondermovie.PermissionRequester
+import com.brunix.data.repository.MoviesRepository
+import com.brunix.data.repository.RegionRepository
+import com.brunix.interactor.GetPopularMovies
 import com.brunix.wondermovie.R
-import com.brunix.wondermovie.model.server.MoviesRepository
+import com.brunix.wondermovie.model.AndroidPermissionChecker
+import com.brunix.wondermovie.model.PlayServicesLocationDataSource
+import com.brunix.wondermovie.model.database.RoomDataSource
+import com.brunix.wondermovie.model.server.MovieDbDataSource
+import com.brunix.wondermovie.ui.common.PermissionRequester
 import com.brunix.wondermovie.ui.common.app
 import com.brunix.wondermovie.ui.common.getViewModel
 import com.brunix.wondermovie.ui.common.startActivity
@@ -36,7 +42,11 @@ class MovieListActivity : AppCompatActivity() {
     private var twoPane: Boolean = false
 
     private lateinit var adapter: MoviesAdapter
-    private val coarsePermissionRequester = PermissionRequester(this, ACCESS_COARSE_LOCATION)
+    private val coarsePermissionRequester =
+        PermissionRequester(
+            this,
+            ACCESS_COARSE_LOCATION
+        )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,9 +67,21 @@ class MovieListActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
-        viewModel = getViewModel {MovieListViewModel(
-            MoviesRepository(app)
-        )}
+        viewModel = getViewModel {
+            val localDataSource = RoomDataSource(app.db)
+            MovieListViewModel(
+                GetPopularMovies(
+                    MoviesRepository(
+                        RoomDataSource(app.db),
+                        MovieDbDataSource(),
+                        RegionRepository(
+                            PlayServicesLocationDataSource(app),
+                            AndroidPermissionChecker(app)
+                        ),
+                        app.getString(R.string.api_key)
+                    )
+                )
+            )}
 
         adapter = MoviesAdapter(viewModel::onMovieClicked)
         recyclerView.adapter = adapter

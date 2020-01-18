@@ -1,15 +1,10 @@
-package com.brunix.wondermovie
+package com.brunix.wondermovie.ui.common
 
 import android.app.Activity
-import android.app.Application
-import android.content.pm.PackageManager
-import androidx.core.content.ContextCompat
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.single.BasePermissionListener
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlin.coroutines.resume
 
 class PermissionRequester(private val activity: Activity, private val permission: String) {
 
