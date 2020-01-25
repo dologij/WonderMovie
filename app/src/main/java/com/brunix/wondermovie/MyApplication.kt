@@ -1,18 +1,17 @@
 package com.brunix.wondermovie
 
 import android.app.Application
-import androidx.room.Room
-import com.brunix.wondermovie.model.database.MovieDatabase
+import com.brunix.wondermovie.di.DaggerWonderMovieComponent
+import com.brunix.wondermovie.di.WonderMovieComponent
 
 class MyApplication : Application() {
-    lateinit var db: MovieDatabase
+    lateinit var component: WonderMovieComponent
         private set
 
     override fun onCreate() {
         super.onCreate()
-        db = Room.databaseBuilder(
-            this,
-            MovieDatabase::class.java, "movie-db"
-        ).build()
+        component = DaggerWonderMovieComponent
+            .factory()
+            .create(this)
     }
 }

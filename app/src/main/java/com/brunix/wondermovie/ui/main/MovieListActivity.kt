@@ -6,14 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import com.brunix.data.repository.MoviesRepository
-import com.brunix.data.repository.RegionRepository
-import com.brunix.interactor.GetPopularMovies
 import com.brunix.wondermovie.R
-import com.brunix.wondermovie.model.AndroidPermissionChecker
-import com.brunix.wondermovie.model.PlayServicesLocationDataSource
-import com.brunix.wondermovie.model.database.RoomDataSource
-import com.brunix.wondermovie.model.server.MovieDbDataSource
 import com.brunix.wondermovie.ui.common.PermissionRequester
 import com.brunix.wondermovie.ui.common.app
 import com.brunix.wondermovie.ui.common.getViewModel
@@ -33,7 +26,7 @@ import kotlinx.android.synthetic.main.movie_list.*
  */
 class MovieListActivity : AppCompatActivity() {
 
-    private lateinit var viewModel : MovieListViewModel
+    private val viewModel : MovieListViewModel by lazy { getViewModel { app.component.movieListViewModel } }
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -67,22 +60,6 @@ class MovieListActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
-        viewModel = getViewModel {
-            val localDataSource = RoomDataSource(app.db)
-            MovieListViewModel(
-                GetPopularMovies(
-                    MoviesRepository(
-                        RoomDataSource(app.db),
-                        MovieDbDataSource(),
-                        RegionRepository(
-                            PlayServicesLocationDataSource(app),
-                            AndroidPermissionChecker(app)
-                        ),
-                        app.getString(R.string.api_key)
-                    )
-                )
-            )}
-
         adapter = MoviesAdapter(viewModel::onMovieClicked)
         recyclerView.adapter = adapter
 
