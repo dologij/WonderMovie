@@ -26,7 +26,8 @@ import kotlinx.android.synthetic.main.movie_list.*
  */
 class MovieListActivity : AppCompatActivity() {
 
-    private val viewModel : MovieListViewModel by lazy { getViewModel { app.component.movieListViewModel } }
+    private lateinit var component: MovieListActivityComponent
+    private val viewModel: MovieListViewModel by lazy { getViewModel { component.movieListViewModel } }
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -44,6 +45,8 @@ class MovieListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_list)
+
+        component = app.component.plus(MovieListActivityModule())
 
         setSupportActionBar(toolbar)
         toolbar.title = title

@@ -28,7 +28,8 @@ class MovieDetailFragment : Fragment(){
      */
     private var movieId: Int = 0
 
-    private val viewModel by lazy { getViewModel { activity!!.app.component.moviiedetailViewModel } }
+    private lateinit var component: MovieDetailActivityComponent
+    private val viewModel by lazy { getViewModel { component.movieDetailViewModel } }
 
     private lateinit var myApp: MyApplication
 
@@ -41,6 +42,9 @@ class MovieDetailFragment : Fragment(){
                 movieId = it.getInt(ARG_MOVIE, -1)
             }
         }
+
+        component = activity!!.app.component.plus(MovieDetailActivityModule(movieId))
+
     }
 
     override fun onCreateView(
