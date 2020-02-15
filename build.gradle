@@ -62,6 +62,10 @@ allprojects {
                 mockitoInline: "org.mockito:mockito-inline:2.28.2"
         ]
 
+        androidxTestLibs = [
+                archCoreTesting: 'android.arch.core:core-testing:1.1.1'
+        ]
+
         androidTestLibs = [
                 espresso     : 'androidx.test.espresso:espresso-core:3.2.0',
                 androidxJunit: 'androidx.test.ext:junit:1.1.1'
