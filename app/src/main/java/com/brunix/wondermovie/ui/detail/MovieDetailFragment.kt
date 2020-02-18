@@ -22,6 +22,9 @@ import com.brunix.wondermovie.ui.common.getViewModel
 import com.brunix.wondermovie.ui.common.loadUrl
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 import kotlinx.android.synthetic.main.movie_detail.*
+import org.koin.android.scope.currentScope
+import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 /**
  * A fragment representing a single Movie detail screen.
@@ -34,10 +37,11 @@ class MovieDetailFragment : Fragment(){
     /**
      * The movie this fragment is presenting.
      */
-//    private lateinit var movie: Movie
     private var movieId: Int = 0
 
-    private lateinit var viewModel: MovieDetailViewModel
+    private val viewModel: MovieDetailViewModel by currentScope.viewModel(this) {
+        parametersOf(movieId)
+    }
 
     private lateinit var myApp: MyApplication
 
@@ -65,22 +69,6 @@ class MovieDetailFragment : Fragment(){
 
 //        activity?.app?.db?.let{RoomDataSource(it)}
         myApp = activity!!.app
-
-        viewModel = getViewModel {
-            val moviesRepository = MoviesRepository(
-                RoomDataSource(myApp.db),
-                MovieDbDataSource(),
-                RegionRepository(
-                    PlayServicesLocationDataSource(myApp),
-                    AndroidPermissionChecker(myApp)
-                ),
-                myApp.getString(R.string.api_key)
-            )
-            MovieDetailViewModel(
-                movieId,
-                FindMovieById(moviesRepository),
-                ToggleMovieFavorite(moviesRepository)
-            ) }
 
         viewModel.model.observe(this, Observer(::updateUi))
 

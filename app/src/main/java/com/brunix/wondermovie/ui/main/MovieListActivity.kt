@@ -22,6 +22,8 @@ import com.brunix.wondermovie.ui.detail.MovieDetailActivity
 import com.brunix.wondermovie.ui.main.MovieListViewModel.UiModel.*
 import kotlinx.android.synthetic.main.activity_movie_list.*
 import kotlinx.android.synthetic.main.movie_list.*
+import org.koin.android.scope.currentScope
+import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
  * An activity representing a list of Pings. This activity
@@ -33,7 +35,7 @@ import kotlinx.android.synthetic.main.movie_list.*
  */
 class MovieListActivity : AppCompatActivity() {
 
-    private lateinit var viewModel : MovieListViewModel
+    private val viewModel : MovieListViewModel by currentScope.viewModel(this)
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -67,22 +69,6 @@ class MovieListActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
-        viewModel = getViewModel {
-            val localDataSource = RoomDataSource(app.db)
-            MovieListViewModel(
-                GetPopularMovies(
-                    MoviesRepository(
-                        RoomDataSource(app.db),
-                        MovieDbDataSource(),
-                        RegionRepository(
-                            PlayServicesLocationDataSource(app),
-                            AndroidPermissionChecker(app)
-                        ),
-                        app.getString(R.string.api_key)
-                    )
-                )
-            )}
-
         adapter = MoviesAdapter(viewModel::onMovieClicked)
         recyclerView.adapter = adapter
 
