@@ -6,14 +6,16 @@ import com.brunix.domain.Movie
 import com.brunix.interactor.FindMovieById
 import com.brunix.interactor.ToggleMovieFavorite
 import com.brunix.wondermovie.ui.common.ScopedViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
 class MovieDetailViewModel(
     private val movieId: Int,
     private val findMovieById: FindMovieById,
-    private val toggleMovieFavorite: ToggleMovieFavorite
+    private val toggleMovieFavorite: ToggleMovieFavorite,
+    override val uiDispatcher: CoroutineDispatcher
 ) :
-    ScopedViewModel() {
+    ScopedViewModel(uiDispatcher) {
 
     class UiModel (val movie: Movie)
 

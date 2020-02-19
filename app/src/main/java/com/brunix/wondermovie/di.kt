@@ -19,6 +19,8 @@ import com.brunix.wondermovie.ui.detail.MovieDetailFragment
 import com.brunix.wondermovie.ui.detail.MovieDetailViewModel
 import com.brunix.wondermovie.ui.main.MovieListActivity
 import com.brunix.wondermovie.ui.main.MovieListViewModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -35,6 +37,7 @@ private val appModule = module {
     factory<RemoteDataSource> { MovieDbDataSource() }
     factory<LocationDataSource> { PlayServicesLocationDataSource(get()) }
     factory<PermissionChecker> { AndroidPermissionChecker(get()) }
+    single<CoroutineDispatcher> { Dispatchers.Main }
 }
 
 private val dataModule = module {
@@ -44,11 +47,11 @@ private val dataModule = module {
 
 private val androidModule = module {
     scope(named<MovieListActivity>()) {
-        viewModel { MovieListViewModel(get()) }
+        viewModel { MovieListViewModel(get(), get()) }
         scoped { GetPopularMovies(get()) }
     }
     scope(named<MovieDetailFragment>()) {
-        viewModel { (id: Int) -> MovieDetailViewModel(id, get(), get()) }
+        viewModel { (id: Int) -> MovieDetailViewModel(id, get(), get(), get()) }
         scoped { FindMovieById(get()) }
         scoped { ToggleMovieFavorite(get()) }
     }

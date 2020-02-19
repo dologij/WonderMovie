@@ -5,17 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import com.brunix.domain.Movie
 import com.brunix.interactor.GetPopularMovies
 import com.brunix.wondermovie.ui.common.ScopedViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
-class MovieListViewModel(private val getPopularMovies: GetPopularMovies) : ScopedViewModel() {
+class MovieListViewModel(private val getPopularMovies: GetPopularMovies, uiDispatcher: CoroutineDispatcher) : ScopedViewModel(uiDispatcher) {
 
     sealed class UiModel {
         // UI state: The list of movies to show in the screen is loading
         object Loading : UiModel()
         // UI state: Show the list of movies in the screen
-        class Content(val movies: List<Movie>) : UiModel()
+        data class Content(val movies: List<Movie>) : UiModel()
         // UI state: Go to the detail of a movie
-        class Navigation(val movie: Movie) : UiModel()
+        data class Navigation(val movie: Movie) : UiModel()
         // UI state: Ask for the permissions needed to get the location
         object RequestLocationPermission : UiModel()
     }
