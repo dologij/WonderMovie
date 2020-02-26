@@ -4,13 +4,12 @@ import com.brunix.data.source.RemoteDataSource
 import com.brunix.domain.Movie
 import com.brunix.wondermovie.model.toDomainMovie
 
-class MovieDbDataSource : RemoteDataSource{
+class MovieDbDataSource (private val movieDb: MovieDb) : RemoteDataSource {
 
-    override suspend fun getPopularMovies(apiKey: String, region: String): List<Movie> {
-        return MovieDb.service
+    override suspend fun getPopularMovies(apiKey: String, region: String): List<Movie> =
+        movieDb.service
             .listPopularMoviesAsync(apiKey, region).await()
             .results
             .map { it.toDomainMovie() }
-    }
 
 }

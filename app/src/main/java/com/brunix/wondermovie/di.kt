@@ -14,6 +14,7 @@ import com.brunix.wondermovie.model.AndroidPermissionChecker
 import com.brunix.wondermovie.model.PlayServicesLocationDataSource
 import com.brunix.wondermovie.model.database.MovieDatabase
 import com.brunix.wondermovie.model.database.RoomDataSource
+import com.brunix.wondermovie.model.server.MovieDb
 import com.brunix.wondermovie.model.server.MovieDbDataSource
 import com.brunix.wondermovie.ui.detail.MovieDetailFragment
 import com.brunix.wondermovie.ui.detail.MovieDetailViewModel
@@ -34,10 +35,12 @@ private val appModule = module {
     single(named("apiKey")) { androidApplication().getString(R.string.api_key)}
     single { MovieDatabase.build(get()) }
     factory<LocalDataSource> { RoomDataSource(get()) }
-    factory<RemoteDataSource> { MovieDbDataSource() }
+    factory<RemoteDataSource> { MovieDbDataSource(get()) }
     factory<LocationDataSource> { PlayServicesLocationDataSource(get()) }
     factory<PermissionChecker> { AndroidPermissionChecker(get()) }
     single<CoroutineDispatcher> { Dispatchers.Main }
+    single(named("baseUrl")) { "https://api.themoviedb.org/3/" }
+    single { MovieDb(get(named("baseUrl"))) }
 }
 
 val dataModule = module {
